@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .district-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 14px;
+  }
+  h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 2rem;
+    border-bottom: 3px solid #27ae60;
+    display: inline-block;
+    padding-bottom: 8px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 1.05rem;
+  }
+
+  /* Search */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 25px;
+  }
+  .search-bar input[type="text"] {
+    width: 320px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 0.95rem;
+    transition: box-shadow .15s;
+  }
+  .search-bar input[type="text"]:focus {
+    box-shadow: 0 0 0 3px rgba(39,174,96,0.08);
+    border-color: #27ae60;
+  }
+  .search-bar button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #27ae60;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, transform .12s;
+  }
+  .search-bar button:hover { background-color: #219150; transform: translateY(-1px); }
+
+  /* Info Section */
+  .info-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 35px;
+  }
+
+  .info-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+  }
+
+  .info-card i {
+    font-size: 26px;
+    color: #27ae60;
+    margin-bottom: 10px;
+  }
+
+  .info-card h4 {
+    margin-bottom: 6px;
+    color: #2c3e50;
+  }
+
+  .info-card p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* District Grid */
+  .district-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .district-item a {
+    display: block;
+    padding: 15px 20px;
+    background: white;
+    color: #34495e;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .district-item a:hover {
+    background-color: #27ae60;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    border-color: #27ae60;
+  }
+
+  .no-results {
+    text-align: center;
+    color: #777;
+    margin-top: 12px;
+    display: none;
+  }
+</style>
+
+<div class="district-container">
+
+  <center><h2>Tamil Nadu Districts</h2></center>
+  <p class="subtitle">
+    Select your district to explore soil types, crop suitability, and
+    agriculture-based recommendations specific to your region 🌱
+  </p>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input id="region-search" type="text" placeholder="Search districts..." aria-label="Search districts">
+    <button id="region-search-btn" type="button">Search</button>
+  </div>
+
+  <!-- Info Section -->
+  <div class="info-box">
+    <div class="info-card">
+      <i class="fa-solid fa-seedling"></i>
+      <h4>Soil Information</h4>
+      <p>Know the soil type and fertility level of your district.</p>
+    </div>
+
+    <div class="info-card">
+      <i class="fa-solid fa-tractor"></i>
+      <h4>Crop Guidance</h4>
+      <p>Find crops best suited for your region and season.</p>
+    </div>
+
+    <div class="info-card">
+      <i class="fa-solid fa-cloud-sun-rain"></i>
+      <h4>Climate Insights</h4>
+      <p>Understand rainfall patterns and climate impact.</p>
+    </div>
+
+    <div class="info-card">
+      <i class="fa-solid fa-chart-line"></i>
+      <h4>Better Yield</h4>
+      <p>Improve productivity with data-driven insights.</p>
+    </div>
+  </div>
+
+  <!-- District List -->
+  <ul id="districtGrid" class="district-grid">
+    {% for region in regions %}
+      <li class="district-item" data-name="{{ region.name|lower }}">
+        <a href="{% url 'soil_list' region.id %}">
+          {{ region.name }}
+        </a>
+      </li>
+    {% empty %}
+      <p style="text-align:center;color:#777;">
+        No districts available at the moment.
+      </p>
+    {% endfor %}
+  </ul>
+
+  <p id="noResults" class="no-results">No matching districts found.</p>
+
+</div>
+
+<script>
+  (function() {
+    const input = document.getElementById('region-search');
+    const btn = document.getElementById('region-search-btn');
+    const list = document.querySelectorAll('#districtGrid .district-item');
+    const noResults = document.getElementById('noResults');
+
+    function filterRegions() {
+      const q = (input.value || '').trim().toLowerCase();
+      let visible = 0;
+      list.forEach(li => {
+        const name = li.getAttribute('data-name') || li.textContent.toLowerCase();
+        if (!q || name.indexOf(q) !== -1) {
+          li.style.display = '';
+          visible++;
+        } else {
+          li.style.display = 'none';
+        }
+      });
+      noResults.style.display = visible ? 'none' : '';
+    }
+
+    // Live search on input
+    input.addEventListener('input', filterRegions);
+
+    // Provide search button for accessibility / explicit search
+    btn.addEventListener('click', filterRegions);
+
+    // If you want server-side searching, replace this client-side form with a GET form:
+    // <form method="get"><input name="q" ...><button type="submit">Search</button></form>
+    // and handle the 'q' parameter in your Django view to filter 'regions'.
+  })();
+</script>
+{% endblock %}

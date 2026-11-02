@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> 🌾Farmcult Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url(index.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        nav {
+            background: rgba(46, 125, 50, 0.9);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: rgb(255, 255, 255);
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-box {
+            background: rgba(255, 255, 255, 0.548);
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 800px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-box h1 {
+            font-size: 42px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .hero-box p {
+            font-size: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #256428;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-box h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h2>🌾Farmcult</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signin.html">Signin</a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <div class="hero-box">
+            <h1>Smart Agriculture for a Better Tomorrow</h1>
+            <p>
+                Our Agriculture App helps farmers with crop guidance, soil analysis,
+                weather updates, fertilizer recommendations, and modern farming solutions.
+                Grow more with smart technology 🌱
+            </p>
+
+            <div class="buttons">
+                <a href="about.html">Learn More</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        © 2025 🌾Farmcult | Empowering Farmers with Technology
+    </footer>
+
+</body>
+</html>

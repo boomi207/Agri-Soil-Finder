@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us | FarmCult{% endblock %}
+
+{% block content %}
+<!-- SEO: meta, Open Graph, Twitter Card and structured data -->
+{% if request %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<meta name="description" content="FarmCult — smart agricultural guidance offering data-driven crop recommendations based on soil, climate and rainfall to help farmers maximize yield and practice sustainable farming.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="About FarmCult — Smart Agricultural Guidance">
+<meta property="og:description" content="Data-driven crop recommendations, sustainability and farmer-first solutions.">
+<meta property="og:image" content="{% static 'myapp/images/about.jpg' %}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About FarmCult">
+<meta name="twitter:description" content="Smart crop recommendations and sustainable agriculture guidance for farmers.">
+<meta name="twitter:image" content="{% static 'myapp/images/about.jpg' %}">
+{% else %}
+<meta name="description" content="FarmCult — smart agricultural guidance offering data-driven crop recommendations based on soil, climate and rainfall to help farmers maximize yield and practice sustainable farming.">
+{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "About FarmCult",
+  "description": "FarmCult empowers farmers with data-driven crop recommendations, reducing risk and promoting sustainable agricultural practices.",
+  "url": "{% if request %}{{ request.build_absolute_uri }}{% endif %}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "FarmCult",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{% static 'myapp/images/logo.png' %}"
+    }
+  }
+}
+</script>
+<style>
+  /* Scoped only to about page */
+  .about-farmcult {
+    max-width: 1100px;
+    margin: auto;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  /* Hero */
+  .about-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+
+  .about-hero h1 {
+    font-size: 2.6rem;
+    color: #1b5e20;
+    margin-bottom: 15px;
+  }
+
+  .about-hero p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .about-hero img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    object-fit: cover;
+  }
+
+  /* Mission section */
+  .mission-box {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    padding: 50px;
+    border-radius: 25px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .mission-box h2 {
+    color: #2e7d32;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .mission-box p {
+    max-width: 800px;
+    margin: auto;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  /* Values */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+  }
+
+  .value-card {
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(46,125,50,0.2);
+  }
+
+  .value-icon {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+  }
+
+  .value-card h3 {
+    color: #1b5e20;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  .value-card p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .about-hero {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="about-farmcult">
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div>
+      <h1>About FarmCult</h1>
+      <p>
+        <strong>FarmCult</strong> is a smart agricultural guidance platform designed
+        to help farmers choose the right crops based on soil type, climate,
+        rainfall, and environmental conditions.
+      </p>
+      <p>
+        We combine traditional farming knowledge with modern technology to
+        support sustainable agriculture and maximize crop yield.
+      </p>
+    </div>
+
+    <img src="{% static 'myapp/images/about.jpg' %}" alt="FarmCult Agriculture">
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission-box">
+    <h2>🌱 Our Mission</h2>
+    <p>
+      To empower farmers with data-driven crop recommendations,
+      reduce farming risks, improve productivity, and promote
+      eco-friendly agricultural practices for a better future.
+    </p>
+  </section>
+
+  <!-- VALUES -->
+  <section>
+    <div class="values-grid">
+
+      <div class="value-card">
+        <div class="value-icon">🌾</div>
+        <h3>Farmer First</h3>
+        <p>
+          We design every feature keeping farmers’ real-world challenges in mind.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">🌍</div>
+        <h3>Sustainability</h3>
+        <p>
+          Encouraging soil health, water conservation, and responsible farming.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">📊</div>
+        <h3>Smart Decisions</h3>
+        <p>
+          Crop suggestions powered by soil data, climate conditions, and research.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Community</h3>
+        <p>
+          Building a connected ecosystem between farmers and technology.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}

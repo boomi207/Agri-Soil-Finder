@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .soil-page-wrapper {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .soil-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .soil-header h2 {
+    color: #5d4037;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  /* Styling the Image */
+  .featured-soil-img {
+    width: 100%; /* Makes it responsive */
+    max-width: 500px; /* Limits size on large screens */
+    height: 250px;
+    object-fit: cover; /* Crops image nicely to fill the box */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    margin-bottom: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-soil-img:hover {
+    transform: scale(1.02);
+  }
+
+  /* List Styling */
+  .soil-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .soil-list li {
+    margin-bottom: 12px;
+  }
+
+  .soil-link {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    background: #fdfaf8;
+    color: #795548;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid #efebe9;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .soil-link::before {
+    content: "📍"; /* Small indicator icon */
+    margin-right: 15px;
+  }
+
+  .soil-link:hover {
+    background: #795548;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(121, 85, 72, 0.2);
+    transform: translateX(5px);
+  }
+</style>
+
+<div class="soil-page-wrapper">
+  <div class="soil-header">
+    <h2>Soil Types in {{ region.name }}</h2>
+    
+    <img src="{% static 'myapp/images/soil.jpg' %}" 
+         alt="Soil Image" 
+         class="featured-soil-img">
+  </div>
+
+  <ul class="soil-list">
+    {% for soil in soils %}
+      <li>
+        <a href="{% url 'crop_list' soil.id %}" class="soil-link">
+          {{ soil.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

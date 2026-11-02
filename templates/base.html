@@ -1,0 +1,381 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Farm Cult{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root{
+            --green-700: #2e7d32;
+            --green-600: #43a047;
+            --accent: #8d6e63;
+            --glass: rgba(255,255,255,0.85);
+            --muted: #eaf7ea;
+            --card-shadow: 0 12px 30px rgba(18, 52, 18, 0.12);
+        }
+
+        *{ box-sizing: border-box; margin:0; padding:0; font-family: 'Poppins', sans-serif; }
+
+        html,body{ height:100%; }
+
+        body{
+            min-height:100vh;
+            background:
+                linear-gradient(180deg, rgba(34,139,34,0.12), rgba(139,69,19,0.06)),
+                url("{% static 'farm-bg.jpg' %}") center/cover no-repeat;
+            color: #0b2b16;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        /* Header */
+        header{
+            position: sticky;
+            top:0;
+            z-index:60;
+            backdrop-filter: blur(6px);
+            background: linear-gradient(90deg, rgba(46,125,50,0.95), rgba(67,160,71,0.85));
+            display:flex;
+            gap:20px;
+            align-items:center;
+            justify-content:space-between;
+            padding:14px 28px;
+            box-shadow: 0 6px 18px rgba(6,50,20,0.18);
+        }
+
+        .logo{
+            display:flex;
+            gap:12px;
+            align-items:center;
+            color:#fff;
+            font-weight:700;
+            font-size:20px;
+            text-transform:uppercase;
+            letter-spacing:0.6px;
+        }
+
+        .logo img{
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            background:linear-gradient(135deg,#fff,#f1f1f1);
+            object-fit:cover;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        nav{
+            display:flex;
+            gap:18px;
+            align-items:center;
+        }
+
+        nav a{
+            color: var(--muted);
+            text-decoration:none;
+            font-weight:600;
+            padding:8px 10px;
+            border-radius:8px;
+            transition: all .22s ease;
+        }
+        nav a:hover{ background: rgba(255,255,255,0.06); color:#fff; transform:translateY(-2px); }
+
+        .auth-btn{
+            background: linear-gradient(180deg,var(--accent), #6e564d);
+            color:#fff;
+            padding:8px 14px;
+            border-radius:22px;
+            font-weight:600;
+            box-shadow: 0 6px 18px rgba(141,110,99,0.18);
+        }
+
+        /* mobile menu toggle */
+        .menu-toggle{
+            display:none;
+        }
+        .hamburger{
+            display:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            align-items:center;
+            justify-content:center;
+            background: rgba(255,255,255,0.06);
+            color:#fff;
+            cursor:pointer;
+        }
+
+        /* Main container */
+        main{
+            padding:40px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .container{
+            max-width:1200px;
+            margin:0 auto;
+        }
+
+        /* Hero */
+        .hero{
+            display:grid;
+            grid-template-columns: 1fr 420px;
+            gap:28px;
+            align-items:center;
+            margin-bottom:30px;
+        }
+
+        .hero-card{
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
+            border-radius:18px;
+            padding:34px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero h1{
+            font-size:40px;
+            margin-bottom:12px;
+            color:#0b421a;
+        }
+
+        .hero p.lead{
+            color:#1a4724;
+            margin-bottom:18px;
+            line-height:1.5;
+        }
+
+        .btn-row{ display:flex; gap:12px; flex-wrap:wrap; }
+        .btn{
+            padding:10px 16px;
+            border-radius:10px;
+            font-weight:700;
+            text-decoration:none;
+            display:inline-flex;
+            gap:10px;
+            align-items:center;
+            justify-content:center;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .btn-primary{
+            background: linear-gradient(180deg,var(--green-600), var(--green-700));
+            color:#fff;
+            box-shadow: 0 10px 20px rgba(30,90,34,0.18);
+        }
+        .btn-outline{
+            background:transparent;
+            color:var(--green-700);
+            border:2px solid rgba(34,139,34,0.12);
+        }
+        .btn:hover{ transform: translateY(-4px); }
+
+        /* Cards (default content area) */
+        .card{
+            background: var(--glass);
+            border-radius:14px;
+            padding:22px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns: repeat(3,1fr);
+            gap:18px;
+            margin-top:18px;
+        }
+        .grid .card:hover{ transform: translateY(-6px); transition: all .18s ease; }
+
+        /* Footer */
+        footer{
+            margin-top:30px;
+            background: linear-gradient(90deg, rgba(46,125,50,0.96), rgba(67,160,71,0.92));
+            color:#ecf8ee;
+            text-align:center;
+            padding:18px 14px;
+            font-size:14px;
+            border-top: 2px solid rgba(255,255,255,0.04);
+        }
+
+        footer .small{ opacity:0.95; font-size:13px; }
+
+        /* WhatsApp float */
+        .whatsapp-float{
+            position:fixed;
+            right:20px;
+            bottom:20px;
+            width:64px;
+            height:64px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background: linear-gradient(180deg,#25D366,#128C7E);
+            color:#fff;
+            z-index:1000;
+            box-shadow: 0 10px 30px rgba(18, 52, 18, 0.28);
+            transition: transform .18s ease;
+        }
+        .whatsapp-float:hover{ transform: translateY(-6px) scale(1.06); }
+        .whatsapp-pulse{
+            position:absolute;
+            width:64px;height:64px;border-radius:50%;
+            background: radial-gradient(circle at center, rgba(37,211,102,0.14), transparent 40%);
+            animation: pulse 2.6s infinite;
+            z-index:-1;
+        }
+        @keyframes pulse{
+            0%{ transform: scale(.9); opacity:0.6;}
+            70%{ transform: scale(1.6); opacity:0;}
+            100%{ transform: scale(1.8); opacity:0;}
+        }
+
+        /* tooltip */
+        .whatsapp-float .tip{
+            position:absolute;
+            right:78px;
+            bottom:6px;
+            background: #0b421a;
+            color:#eef6ea;
+            padding:8px 10px;
+            border-radius:8px;
+            font-weight:600;
+            white-space:nowrap;
+            opacity:0;
+            transform:translateY(6px);
+            transition: all .18s ease;
+            pointer-events:none;
+            font-size:13px;
+        }
+        .whatsapp-float:hover .tip{ opacity:1; transform:none; }
+
+        /* Responsive */
+        @media (max-width:980px){
+            .hero{ grid-template-columns:1fr; }
+            .grid{ grid-template-columns: repeat(2,1fr); }
+            .hamburger{ display:flex; }
+            nav{ display:none; position:absolute; right:18px; top:70px; background: linear-gradient(180deg, rgba(34,139,34,0.95), rgba(46,125,50,0.92)); padding:14px; border-radius:10px; box-shadow: 0 10px 24px rgba(6,50,20,0.18); flex-direction:column; gap:12px; }
+            .menu-toggle:checked + .hamburger + nav{ display:flex; }
+        }
+        @media (max-width:560px){
+            .grid{ grid-template-columns:1fr; }
+            .logo{ font-size:18px; }
+            header{ padding:12px 14px; }
+            main{ padding:20px; }
+            .hero h1{ font-size:28px; }
+        }
+    </style>
+
+</head>
+<body>
+
+    <a style="text-decoration:none;" href="https://wa.me/6382416390" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <span class="whatsapp-pulse" aria-hidden="true"></span>
+        <i class="fa-brands fa-whatsapp" style="font-size:22px;"></i>
+        <span class="tip">Chat with us</span>
+    </a>
+
+    <header>
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div class="logo">
+                <img src="{% static 'farm-logo.png' %}" alt="Farm Cult logo">
+                FARM CULT
+            </div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.9); margin-left:6px; opacity:0.95;">Growing with Nature</div>
+        </div>
+
+        <!-- checkbox for mobile toggle -->
+        <input id="menu-toggle" class="menu-toggle" type="checkbox" aria-hidden="true">
+        <label for="menu-toggle" class="hamburger" aria-hidden="true" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </label>
+
+        <nav>
+            <a href="{% url 'region_list' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="">Contact</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="auth-btn">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            {% block content %}
+            <!-- Default hero; pages can override or append -->
+            <section class="hero">
+                <div class="hero-card card">
+                    <h1>Welcome to Farm Cult</h1>
+                    <p class="lead">Connecting farmers, knowledge and markets — discover region-specific crops, sustainable tips and local insights to grow better.</p>
+
+                    <div class="btn-row" role="group" aria-label="Primary actions">
+                        <a class="btn btn-primary" href="{% url 'region_list' %}"><i class="fa-solid fa-seedling"></i> Explore Regions</a>
+                        <a class="btn btn-outline" href="{% url 'about' %}"><i class="fa-solid fa-circle-info"></i> Learn More</a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <h3 style="margin-bottom:8px;color:#0b421a;">Today's Tip</h3>
+                        <p style="line-height:1.45; color:#163d26;">
+                            Rotate crops to maintain soil health. Adding legumes can naturally replenish nitrogen and boost yield.
+                        </p>
+                        <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+                            <span style="background:#eefaf0;padding:8px;border-radius:8px;color:#1b5e20;font-weight:700;">Soil</span>
+                            <small style="color:#2e7d32;opacity:0.95;">Updated: {{ now|date:"M d, Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Example grid of cards — pages can replace -->
+            <section>
+                <div class="grid">
+                    <div class="card">
+                        <h4>Region A</h4>
+                        <p style="font-size:14px; color:#234925;">Climate: Tropical — Main crops: Rice, Banana</p>
+                    </div>
+                    <div class="card">
+                        <h4>Region B</h4>
+                        <p style="font-size:14px; color:#234925;">Climate: Semi-arid — Main crops: Millet, Pulses</p>
+                    </div>
+                    <div class="card">
+                        <h4>Resources</h4>
+                        <p style="font-size:14px; color:#234925;">Guides, market prices and best practices for smallholders.</p>
+                    </div>
+                </div>
+            </section>
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        🌱 © {{ year|default:"2025" }} Farm Cult | Growing with Nature
+        <div class="small" style="margin-top:6px; opacity:0.95;">
+            <a href="" style="color:rgba(255,255,255,0.92); text-decoration:none; margin-right:10px;"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="" style="color:rgba(255,255,255,0.92); text-decoration:none;"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    {% block extra_js %}
+    <script>
+        // Small accessibility enhancement: close mobile menu when a nav link is clicked
+        (function(){
+            const toggle = document.getElementById('menu-toggle');
+            const nav = document.querySelector('header nav');
+            if(!toggle || !nav) return;
+            nav.addEventListener('click', (e) => {
+                if(e.target.tagName === 'A') toggle.checked = false;
+            });
+        })();
+    </script>
+    {% endblock %}
+</body>
+</html>

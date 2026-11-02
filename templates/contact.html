@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# SEO & Social meta - put these inside the head in base.html via a matching block (e.g. {% block meta %}) #}
+{% block meta %}
+    <meta name="description" content="Contact FarmCult — Get expert farming advice, product support, and partnership inquiries. Reach our team via phone, email, or this contact form.">
+    <meta name="keywords" content="FarmCult, agriculture support, contact, farming advice, agri help, farmer support">
+    <meta name="author" content="FarmCult">
+    <link rel="canonical" href="https://yourdomain.com/contact/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Contact Us | FarmCult">
+    <meta property="og:description" content="Reach FarmCult for farming advice, product support, and partnership opportunities. We're here to help farmers grow better.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/contact/">
+    <meta property="og:image" content="{% static 'images/contact-og.jpg' %}">
+    <meta property="og:site_name" content="FarmCult">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us | FarmCult">
+    <meta name="twitter:description" content="Reach FarmCult for farming advice, product support, and partnership opportunities.">
+    <meta name="twitter:image" content="{% static 'images/contact-og.jpg' %}">
+
+    <meta name="robots" content="index, follow">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "FarmCult",
+      "url": "https://yourdomain.com/",
+      "logo": "{% static 'images/logo.png' %}",
+      "image": "{% static 'images/contact-og.jpg' %}",
+      "description": "FarmCult helps farmers grow better through expert advice, products and support.",
+      "telephone": "+91 98765 43210",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Agriculture Innovation Center",
+        "addressLocality": "City",
+        "addressRegion": "State",
+        "postalCode": "PIN",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://www.facebook.com/yourpage",
+        "https://twitter.com/yourhandle",
+        "https://www.linkedin.com/company/yourcompany"
+      ],
+      "openingHours": "Mo-Sa 09:00-18:00"
+    }
+    </script>
+{% endblock %}
+
+{% block title %}Contact Us | FarmCult{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/contact-bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 60px auto;
+            background: rgba(255, 255, 255, 0.644);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-info h2 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-form h2 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #256428;
+        }
+
+        @media (max-width: 768px) {
+            .contact-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+<body>
+
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p class="subtitle">We’re here to help farmers grow better 🌱</p>
+
+        <div class="contact-content">
+
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p><strong>📍 Address:</strong> Agriculture Innovation Center, India</p>
+                <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+                <p><strong>📧 Email:</strong> support@agriapp.com</p>
+                <p><strong>⏰ Working Hours:</strong> Mon – Sat (9 AM – 6 PM)</p>
+            </div>
+
+            <div class="contact-form">
+                <h2>Send Message</h2>
+
+                <form id="contact-form">
+                    <input type="text" name="from_name" placeholder="Your Name" required>
+                    <input type="email" name="reply_to" placeholder="Your Email" required>
+                    <input type="text" name="subject" placeholder="Subject">
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+
+                <p id="form-status"></p>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+  (function () {
+    emailjs.init("pTGKtscBZYW_noPf1"); // 🔑 replace
+  })();
+
+  document.getElementById("contact-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_w6xoa78",     // service id
+      "template_ev7z7so",    // template id
+      this
+    ).then(
+      function () {
+        document.getElementById("form-status").innerHTML =
+          "✅ Message sent successfully!";
+        document.getElementById("contact-form").reset();
+      },
+      function (error) {
+        document.getElementById("form-status").innerHTML =
+          "❌ Failed to send message. Try again!";
+        console.error(error);
+      }
+    );
+  });
+</script>
+
+</body>
+{% endblock %}

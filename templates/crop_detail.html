@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .detail-wrapper {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  /* Header Section */
+  .detail-header {
+    background: #1b5e20;
+    color: white;
+    padding: 25px;
+    text-align: center;
+  }
+
+  .detail-header h2 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  /* Main Content Layout */
+  .detail-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .detail-image-box {
+    flex: 1;
+    min-width: 350px;
+    background: #f4f4f4;
+  }
+
+  .detail-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .detail-info-box {
+    flex: 1.2;
+    min-width: 350px;
+    padding: 30px;
+  }
+
+  /* Modern Table Styling */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .spec-table tr {
+    border-bottom: 1px solid #eee;
+  }
+
+  .spec-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .spec-table th {
+    text-align: left;
+    padding: 15px 10px;
+    color: #666;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    width: 40%;
+  }
+
+  .spec-table td {
+    padding: 15px 10px;
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-align: right;
+  }
+
+  /* Highlight specific rows */
+  .highlight-row {
+    background-color: #f9fbf9;
+  }
+
+  .badge {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #c8e6c9;
+  }
+
+  /* Back Button */
+  .footer-nav {
+    padding: 20px;
+    background: #fafafa;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+
+  .btn-back {
+    text-decoration: none;
+    color: #1b5e20;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+  }
+
+  .btn-back:hover {
+    transform: translateX(-5px);
+  }
+
+  /* Mobile Adjustments */
+  @media (max-width: 700px) {
+    .detail-image-box {
+      height: 250px;
+    }
+  }
+</style>
+
+<div class="detail-wrapper">
+  <div class="detail-header">
+    <h2>{{ crop.crop_name }}</h2>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-image-box">
+      {% if crop.image %}
+        <img src="{{ crop.image.url }}" alt="{{ crop.crop_name }}">
+      {% else %}
+        <img src="{% static 'myapp/images/crop_default.jpg' %}" alt="Default Crop Image">
+      {% endif %}
+
+    </div>
+
+    <div class="detail-info-box">
+      <table class="spec-table">
+        <tr>
+          <th>Seed Variety</th>
+          <td>{{ crop.seed }}</td>
+        </tr>
+        <tr class="highlight-row">
+          <th>Soil Type</th>
+          <td><span class="badge">{{ crop.soil.name }}</span></td>
+        </tr>
+        <tr>
+          <th>Soil pH</th>
+          <td>{{ crop.soil_ph }}</td>
+        </tr>
+        <tr>
+          <th>Climate</th>
+          <td>{{ crop.climate }}</td>
+        </tr>
+        <tr class="highlight-row">
+          <th>Temperature</th>
+          <td>{{ crop.temperature }}°C</td>
+        </tr>
+        <tr>
+          <th>Rainfall</th>
+          <td>{{ crop.rainfall }} mm</td>
+        </tr>
+        <tr>
+          <th>Water pH</th>
+          <td>{{ crop.water_ph }}</td>
+        </tr>
+        <tr class="highlight-row">
+          <th>Fertilizer</th>
+          <td>{{ crop.fertilizer }}</td>
+        </tr>
+        <tr>
+          <th>Harvest Time</th>
+          <td>{{ crop.harvest_days }} Days</td>
+        </tr>
+        <tr>
+          <th>Expected Yield</th>
+          <td style="color: #f57c00;">{{ crop.yield_ton }} t/ha</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-nav">
+    <a href="javascript:history.back()" class="btn-back">
+      ← Back to Suitable Crops
+    </a>
+  </div>
+</div>
+{% endblock %}
